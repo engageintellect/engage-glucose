@@ -11,16 +11,17 @@
 	<div class="flex bg-neutral-900 text-neutral-100 justify-center items-start md:items-center w-full break-words py-10">
 		<div class="w-full max-w-xl mx-auto px-6">
 			<div class="">
-					<div class="text-4xl text-neutral-100 font-thin">{data.patientName.data[0].firstName} {data.patientName.data[0].lastName}</div>
-					<div class="text-base md:text-xl text-neutral-300 font-thin">{data.patientName.data[0].glucoseMeasurement.Timestamp}</div>
-				<div class="flex text-teal-500 font-extrabold text-7xl md:text-7xl items-end justify-start">
+				<div class="text-4xl text-neutral-100 font-thin">{data.patientName.data[0].firstName} {data.patientName.data[0].lastName}</div>
+				<div class="text-base md:text-xl text-neutral-300 font-thin">{data.patientName.data[0].glucoseMeasurement.Timestamp}</div>
+				
+				<div class="flex text-teal-500 font-extrabold text-7xl md:text-7xl items-end justify-start my-5">
 					<div>{data.glucoseValue}</div>
 					<div class="text-3xl">mg/dL</div>
 				</div>
 
 			</div>
 
-			<div class="text-2xl md:text-3xl sm:text-5xl lg:text-7xl font-semibold text-neutral-300 mt-5">Blood Glucose</div>
+			<div class="text-2xl md:text-3xl sm:text-5xl font-semibold text-neutral-300">Blood Glucose Normal.</div>
 				<div class="p-6 bg-neutral-800 rounded mt-2">
 
 					<div class="">
