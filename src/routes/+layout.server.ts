@@ -1,8 +1,7 @@
-// import fetch from 'node-fetch';
-
 import { USER_EMAIL, USER_PASSWORD } from "$env/static/private";
 
 const API_ENDPOINT = 'https://api.libreview.io/llu/auth/login';
+const CONNECTIONS_ENDPOINT = 'https://api.libreview.io/llu/connections';
 const HEADERS = {
   'Content-Type': 'application/json',
   'Accept-Encoding': 'gzip',
@@ -12,50 +11,74 @@ const HEADERS = {
   'version': '4.7.0',
 };
 
-export async function load() {
-  const requestBody = {
-    email: USER_EMAIL,
-    password: USER_PASSWORD,
-  };
-
+export async function load({ cookies }:any) {
   try {
-    const response = await fetch(API_ENDPOINT, {
-      method: 'POST',
-      headers: HEADERS,
-      body: JSON.stringify(requestBody),
-    });
+    let token = cookies.get('token');
 
-    if (response.ok) {
-      const { data } = await response.json();
-      const token = data.authTicket.token;
-
-      const connectionResponse = await fetch(`https://api.libreview.io/llu/connections`, {
-        method: 'GET',
-        headers: {
-          ...HEADERS,
-          'authorization': `Bearer ${token}`,
-        },
+    if (!token) {
+      console.log('No token found, fetching new token')
+      const authResponse = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify({
+          email: USER_EMAIL,
+          password: USER_PASSWORD,
+        }),
       });
 
-      if (connectionResponse.ok) {
-        const patientData = await connectionResponse.json();
-        const { glucoseMeasurement } = patientData.data[0];
-        return {
-          patientName: patientData,
-          glucoseValue: glucoseMeasurement.Value
-        };
-      } else {
-        throw new Error(`Error: ${connectionResponse.status} - ${connectionResponse.statusText}`);
+      if (!authResponse.ok) {
+        throw new Error(`Authentication Error: ${authResponse.status} - ${authResponse.statusText}`);
       }
-    } else {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+
+      const { data } = await authResponse.json();
+      console.log(data)
+      token = data?.authTicket?.token;
+
+      if (!token) {
+        throw new Error('Invalid authentication response');
+      }
+
+      // Set the token as a cookie
+      cookies.set('auth_token', token, {
+        path: '/',
+        httpOnly: true,
+        // Add other cookie options as needed, such as secure: true for HTTPS environments
+      });
     }
-  } catch (error) {
+
+    const connectionResponse = await fetch(CONNECTIONS_ENDPOINT, {
+      method: 'GET',
+      headers: {
+        ...HEADERS,
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!connectionResponse.ok) {
+      throw new Error(`Connection Error: ${connectionResponse.status} - ${connectionResponse.statusText}`);
+    }
+
+    const patientData = await connectionResponse.json();
+    const glucoseMeasurement = patientData?.data?.[0]?.glucoseMeasurement?.Value;
+
+    if (glucoseMeasurement === undefined) {
+      throw new Error('Invalid patient data response');
+    }
+
+    console.log('Success fetching patient data')
+
+    return {
+      patient: patientData,
+      glucoseValue: glucoseMeasurement,
+    };
+  } catch (error:any) {
     console.error(error);
+    console.log('hey world')
     return {
       status: 500,
-      error: 'Internal Server Error',
+      data: {
+        error: error.message || 'Internal Server Error',
+      },
     };
   }
 }
-
