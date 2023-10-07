@@ -8,12 +8,11 @@
   }
 
   function fetchData() {
-    // Refresh the 'data' object by reloading the page
     location.reload();
   }
 
-  // Refresh data every 10 seconds
-  const intervalId = setInterval(fetchData, 10000);
+  // Refresh data every 30 seconds
+  const intervalId = setInterval(fetchData, 30000);
 
   // Clear the interval when the component is destroyed to prevent memory leaks
   onDestroy(() => {
@@ -21,14 +20,14 @@
   });
 </script>
 
-<div class="flex w-full min-h-screen break-words">
+<div class="flex w-full h-full min-h-screen break-words">
   <div class="flex bg-neutral-900 text-neutral-100 justify-center items-start md:items-center w-full break-words py-5">
     <div class="w-full max-w-xl mx-auto px-6">
       <div class="">
         <div class="text-4xl text-neutral-100 font-thin">{data.patient.data[0].firstName} {data.patient.data[0].lastName}</div>
         <div class="text-base md:text-xl text-neutral-300 font-thin">{data.patient.data[0].glucoseMeasurement.Timestamp}</div>
 
-        <div class="flex text-teal-500 font-extrabold text-7xl md:text-7xl lg:text-9xl items-end justify-start my-5">
+        <div class="flex gap-1 h-full w-full items-end text-teal-500 font-extrabold text-7xl md:text-7xl my-5">
           <div>{data.glucoseValue}</div>
           <div class="text-3xl">mg/dL</div>
         </div>
