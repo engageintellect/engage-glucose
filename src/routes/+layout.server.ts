@@ -58,6 +58,23 @@ export async function load({ cookies }:any) {
       throw new Error(`Connection Error: ${connectionResponse.status} - ${connectionResponse.statusText}`);
     }
 
+    const stuff = await fetch('https://api.libreview.io/llu/connections/58b1f3ba-5c08-11ee-8809-aed2337633a5/graph', {
+      method: 'GET',
+      headers: {
+        ...HEADERS,
+        'Authorization': `Bearer ${token}`,
+      },
+
+    });
+
+    let things = await stuff.json();
+
+    console.log('-------------------------------this is stuff ------------------------------')
+
+    console.log(things.data.connection.glucoseMeasurement)
+
+
+
     const patientData = await connectionResponse.json();
     const glucoseMeasurement = patientData?.data?.[0]?.glucoseMeasurement?.Value;
 
@@ -66,6 +83,7 @@ export async function load({ cookies }:any) {
     }
 
     console.log('Success fetching patient data')
+    console.log(patientData)
 
     return {
       patient: patientData,
