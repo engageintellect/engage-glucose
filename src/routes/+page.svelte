@@ -8,8 +8,8 @@
 </script>
 
 <div class="flex w-full h-screen break-words">
-	<div class="flex bg-neutral-900 text-neutral-100 justify-center items-center w-full break-words">
-		<div class="">
+	<div class="flex bg-neutral-900 text-neutral-100 justify-center items-start md:items-center w-full break-words py-10">
+		<div class="w-full max-w-xl mx-auto px-6">
 			<div class="">
 					<div class="text-4xl text-neutral-100 font-thin">{data.patientName.data[0].firstName} {data.patientName.data[0].lastName}</div>
 					<div class="text-base md:text-xl text-neutral-300 font-thin">{data.patientName.data[0].glucoseMeasurement.Timestamp}</div>
