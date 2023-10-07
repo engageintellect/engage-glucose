@@ -20,7 +20,7 @@
   });
 </script>
 
-<div class="flex w-full h-full min-h-screen break-words">
+<div class="flex w-full h-full min-h-screen break-words bg-red-200">
   <div class="flex bg-neutral-900 text-neutral-100 justify-center items-start md:items-center w-full break-words py-5">
     <div class="w-full max-w-xl mx-auto px-6">
       <div class="">
