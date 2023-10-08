@@ -55,12 +55,6 @@ devDependencies:
   svelte-check:
     specifier: ^3.4.3
     version: 3.5.2(postcss-load-config@4.0.1)(postcss@8.4.31)(svelte@4.2.1)
-  svelte-hero-icons:
-    specifier: ^5.0.0
-    version: 5.0.0
-  svelte-heros-v2:
-    specifier: ^0.10.12
-    version: 0.10.12(svelte@4.2.1)
   tailwindcss:
     specifier: ^3.3.2
     version: 3.3.3
@@ -406,10 +400,6 @@ packages:
 
   /@polka/url@1.0.0-next.23:
     resolution: {integrity: sha512-C16M+IYz0rgRhWZdCmK+h58JMv8vijAA61gmz2rspCSwKwzBebpdcsiUmwrtJRdphuY30i6BSLEOP8ppbNLyLg==}
-    dev: true
-
-  /@steeze-ui/heroicons@2.2.3:
-    resolution: {integrity: sha512-bv4YK375U9TDS50SmJ5VdFy2UmMhgKbJCCbo6IUU3qs2luEj2VX6sQoDy96j8AIKttxMd62ih1j0lZj7CTjIfA==}
     dev: true
 
   /@sveltejs/adapter-auto@2.1.0(@sveltejs/kit@1.25.1):
@@ -2267,21 +2257,6 @@ packages:
       espree: 9.6.1
       postcss: 8.4.31
       postcss-scss: 4.0.9(postcss@8.4.31)
-      svelte: 4.2.1
-    dev: true
-
-  /svelte-hero-icons@5.0.0:
-    resolution: {integrity: sha512-xKMI/Z0f/6831I0R1YKJjVbAw9VBD6XKysvng6LtomlS4n3ZD1lZNAfLrrCmnc1pmiLr/8sVeQA8kgHLQwYlRg==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@steeze-ui/heroicons': 2.2.3
-    dev: true
-
-  /svelte-heros-v2@0.10.12(svelte@4.2.1):
-    resolution: {integrity: sha512-0wspy0z9UFS9f/iPKQQ1JDHlNY6e7h+LVW+wJ0qJnuWDpvsJllmoCX2g0frYbMPDWZJEwh2pkO25Dp3lDGCxGQ==}
-    peerDependencies:
-      svelte: ^3.54.0 || ^4.0.0
-    dependencies:
       svelte: 4.2.1
     dev: true
 
