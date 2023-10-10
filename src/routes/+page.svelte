@@ -3,8 +3,15 @@
 	import { onDestroy } from 'svelte';
 	export let data: any;
 
-	user.set(0);
+	let users = {
+		jana: 0,
+		josh: 1
+	};
 
+	// Choose a user to monitor
+	user.set(users.jana);
+
+	// Setup the device object
 	let device = {
 		user_num: $user,
 		user_data: data.patient.data[$user],
