@@ -1,7 +1,15 @@
 <script lang="ts">
-	import { showEvents } from '$lib/stores';
+	import { user, showEvents } from '$lib/stores';
 	import { onDestroy } from 'svelte';
 	export let data: any;
+
+	user.set(0);
+
+	let device = {
+		user_num: $user,
+		user_data: data.patient.data[$user],
+		glucose: data.patient.data[$user].glucoseMeasurement
+	};
 
 	// let showEvents = false;
 	let showAlarms = true;
@@ -36,11 +44,11 @@
 		<div class="w-full max-w-xl mx-auto px-6">
 			<div class="">
 				<div class="text-4xl text-neutral-100 font-thin">
-					{data.patient.data[0].firstName}
-					{data.patient.data[0].lastName}
+					{device.user_data.firstName}
+					{device.user_data.lastName}
 				</div>
 				<div class="text-base md:text-xl text-neutral-300 font-thin">
-					{data.patient.data[0].glucoseMeasurement.Timestamp}
+					{device.glucose.Timestamp}
 				</div>
 
 				<!-- ################################################### -->
@@ -51,7 +59,7 @@
 					class="flex justify-between gap-1 h-full w-full items-end text-teal-500 font-extrabold text-7xl md:text-7xl lg:text-8xl my-5"
 				>
 					<div class="flex gap-1 items-end">
-						<div>{data.glucoseValue}</div>
+						<div>{device.glucose.Value}</div>
 						<div class="text-2xl">mg/dL</div>
 					</div>
 					<svg
@@ -75,14 +83,18 @@
 			<!-- CURRENT STATUS -->
 			<!-- ################################################### -->
 
-			{#if !data.patient.data[0].glucoseMeasurement.isLow || !data.patient.data[0].glucoseMeasurement.isHigh}
+			{#if !device.glucose.isLow || !device.glucose.isHigh}
 				<div class="text-2xl sm:text-3xl font-semibold text-neutral-300">Blood Glucose Normal.</div>
 			{:else}
-				{#if data.patient.data[0].glucoseMeasurement.isLow}
+				{#if device.glucose.isLow}
 					<div class="text-2xl sm:text-3xl font-semibold text-yellow-500">Glucose Low!</div>
+					<div class="text-lg sm:text-xl font-semibold text-yellow-500">You need to eat.</div>
 				{/if}
-				{#if !data.patient.data[0].glucoseMeasurement.isHigh}
+				{#if !device.glucose.isHigh}
 					<div class="text-2xl sm:text-3xl font-semibold text-red-500">Glucose High!</div>
+					<div class="text-lg sm:text-xl font-semibold text-red-500">
+						Drink water and go for a walk.
+					</div>
 				{/if}
 			{/if}
 
@@ -110,8 +122,8 @@
 							</div>
 
 							<div class="flex gap-5 text-lg md:text-xl font-thin">
-								<div class="">High: {data.patient.data[0].targetHigh}</div>
-								<div class="">Low: {data.patient.data[0].targetLow}</div>
+								<div class="">High: {device.user_data.targetHigh}</div>
+								<div class="">Low: {device.user_data.targetLow}</div>
 							</div>
 							<!-- <div>{JSON.stringify(data.patient.data, null, 2)}</div> -->
 						</div>
