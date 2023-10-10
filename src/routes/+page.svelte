@@ -113,6 +113,7 @@
 								<div class="">High: {data.patient.data[0].targetHigh}</div>
 								<div class="">Low: {data.patient.data[0].targetLow}</div>
 							</div>
+							<div>{JSON.stringify(data.patient.data, null, 2)}</div>
 						</div>
 					</div>
 				{/if}
